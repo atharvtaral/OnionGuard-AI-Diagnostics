@@ -56,13 +56,15 @@ st.markdown("""
         margin-bottom: 10px;
     }
 
+    
     /* Prediction Card styling */
     .res-card {
-        background-color: white;
+        background-color: black;
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         border-left: 10px solid #2e7d32;
+        color: #ffffff; /* This makes the text pure white */
     }
 
     /* Button styling */
