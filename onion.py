@@ -171,7 +171,7 @@ with col2:
 
             st.markdown(f"""
                 <div class="res-card">
-                    <h2 style='color: #2e7d32;'>Diagnosis Complete</h2>
+                    <h2 style='color: #red;'>Diagnosis Complete</h2>
                     <p style='font-size: 20px;'><b>Detected:</b> {result}</p>
                     <p style='font-size: 18px;'><b>Confidence:</b> {confidence:.2f}%</p>
                 </div>
@@ -191,6 +191,6 @@ with col2:
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown(
-    "<p style='text-align: center; color: red;'>© 2026 Atharv Taral | Final Year Project | Savitribai Phule Pune University</p>",
+    "<p style='text-align: center; color: #999;'>© 2026 Atharv Taral | Final Year Project | Savitribai Phule Pune University</p>",
     unsafe_allow_html=True
 )
