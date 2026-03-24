@@ -93,7 +93,10 @@ st.markdown("""
     }
 
 
-    
+    [data-testid="stNotification"] p {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+    }
 
     
 
