@@ -88,11 +88,14 @@ st.markdown("""
     
     /* 2. Main Title - Dark Green for high contrast */
     .main-title { 
-        font-size: 45px !important; 
-        font-weight: 850 !important; 
-        color: #1b5e20 !important; 
+        font-size: 60px !important;    /* Increased from 40px to 60px */
+        font-weight: 900 !important;    /* Extra Bold */
+        color: #1b5e20 !important;      /* Dark Green */
         text-align: center !important; 
-        margin-bottom: 25px !important;
+        margin-top: -50px !important;   /* Pulls it up to reduce empty space */
+        margin-bottom: 20px !important;
+        letter-spacing: -1px !important; /* Makes it look like a modern brand */
+        line-height: 1.2 !important;
     }
     
     /* 3. Subheaders - Professional Green */
