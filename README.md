@@ -1,6 +1,6 @@
 # 🧅 OnionGuard: Agentic AI-Based Crop Diagnostic System
 
-[![Python Version](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/framework-Streamlit-red.svg)](https://streamlit.io/)
 [![Model Accuracy](https://img.shields.io/badge/accuracy-96.09%25-brightgreen.svg)]()
 
