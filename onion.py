@@ -6,13 +6,13 @@ from PIL import Image
 import time
 import os
 import openai
+import requests
 from dotenv import load_dotenv
 from streamlit_mic_recorder import mic_recorder
 
 # ==========================================
 # 1. Configuration & API Setup
 # ==========================================
-# This will load the OPENAI_API_KEY from your .env file
 load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -23,165 +23,156 @@ if not API_KEY:
 client = openai.OpenAI(api_key=API_KEY)
 
 # ==========================================
-# 2. Expert AI Advisor Functions
-# ==========================================
-
-def get_expert_advice(disease_name, user_query="What is the treatment?"):
-    """Fetch medicine and treatment advice from GPT-4o"""
-    prompt = f"""
-    You are an expert Agriculture Scientist. The onion crop has '{disease_name}'.
-    Provide the following details in simple bullet points:
-    - Cause of the disease.
-    - Recommended Medicine/Fungicide (Exact name for Google search).
-    - Application method (How to spray).
-    - Safety precautions for the farmer.
-    Farmer's Question: {user_query}
-    Keep it professional but easy to understand.
-    """
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "system", "content": "You are a helpful Agri-Expert."},
-                  {"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content
-
-
-import requests
-def get_medicine_image(query):
-    """Searching for a medicine photo from Google"""
-    api_key = os.getenv("GOOGLE_API_KEY")
-    cx = os.getenv("GOOGLE_CX")
-    search_url = "https://www.googleapis.com/customsearch/v1"
-
-    params = {
-        'q': query + " agriculture medicine fungicide bottle",
-        'cx': cx,
-        'key': api_key,
-        'searchType': 'image',
-        'num': 1
-    }
-    try:
-        response = requests.get(search_url, params=params)
-        data = response.json()
-        if 'items' in data:
-            return data['items'][0]['link']
-        else:
-            # If the item is not found, an error will appear in the terminal.
-            print(f"Google Search Response: {data}")
-    except Exception as e:
-        print(f"Error fetching image: {e}")
-
-def text_to_speech(text):
-    """Convert AI advice to Audio speech"""
-    response = client.audio.speech.create(model="tts-1", voice="alloy", input=text)
-    audio_path = "crop_advice.mp3"
-    response.stream_to_file(audio_path)
-    return audio_path
-
-# ==========================================
-# 3. Page Layout & Styling (Your Original)
+# 2. UI Styling (Premium Agriculture Theme)
 # ==========================================
 st.set_page_config(page_title="OnionGuard AI", page_icon="🧅", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Overall App Background */
-    .stApp { 
-        background-color: #fcfdfc; 
+    /* Global Styles */
+    .stApp { background-color: #fcfdfc; }
+    
+    /* Main Title Styling */
+    .main-title { 
+        font-size: 48px !important; 
+        font-weight: 900 !important; 
+        color: #1b5e20 !important; 
+        text-align: center !important; 
+        margin-top: -30px !important;
+        text-shadow: 2px 2px 4px #d1d1d1;
     }
     
-    /* 2. Treatment Expert Suggestion Header */
-    h3 { 
-        color: #1b5e20 !important; 
-        font-weight: 800 !important;
-        margin-top: 20px !important;
+    /* Section Headers */
+    h3, .stMarkdown h3 { 
+        color: #2e7d32 !important; 
+        font-weight: 700 !important;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 10px;
     }
 
-    /* 3. FIX: Targeting the AI Advice Text (Markdown Lists) */
-    /* This forces all text and list items in the main area to be Dark Gray/Black */
-    .stMarkdown p, .stMarkdown li {
+    /* AI Advice & Bullet Points - High Visibility */
+    .stMarkdown p, .stMarkdown li, .stMarkdown span {
         color: #262730 !important; 
         font-size: 18px !important;
-        line-height: 1.6 !important;
+        line-height: 1.7 !important;
     }
 
-    /* 4. Info Box (The Blue Box in your screenshot) */
-    .stAlert {
-        background-color: #e8f5e9 !important; /* Light Green background instead of blue */
-        border: 1px solid #c8e6c9 !important;
-    }
-    .stAlert p {
-        color: #1b5e20 !important; /* Dark Green text for the info box */
-        font-weight: 500;
-    }
-
-    /* 5. Diagnosis Result Card (The Black Box) */
+    /* Diagnosis Result Card (Modern Dark) */
     .res-card { 
-        background-color: #121212 !important; 
-        padding: 20px; 
-        border-radius: 12px; 
-        border-left: 8px solid #43a047; 
-        margin-bottom: 20px;
+        background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+        padding: 30px; 
+        border-radius: 20px; 
+        border-left: 12px solid #43a047; 
+        box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        margin-bottom: 25px;
+        color: white !important;
     }
-    .res-card h2, .res-card p {
-        color: #ffffff !important; /* Keep this white as the card is black */
+    .res-card h2 { color: #ffffff !important; margin-bottom: 10px; }
+    .res-card p { color: #e0e0e0 !important; font-size: 19px !important; }
+
+    /* Custom Info Box */
+    .stAlert {
+        background-color: #e8f5e9 !important;
+        border: 1px solid #c8e6c9 !important;
+        border-radius: 10px;
     }
+    .stAlert p { color: #1b5e20 !important; font-weight: 600 !important; }
+
+    /* Image Shadow effect */
+    img { border-radius: 15px; box-shadow: 0px 4px 15px rgba(0,0,0,0.1); }
+
+    /* Sidebar Styling */
+    section[data-testid="stSidebar"] { background-color: #1b5e20 !important; }
+    section[data-testid="stSidebar"] * { color: white !important; }
     </style>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. Sidebar & Model Loading (Your Original)
+# 3. Core Functions (AI & Logic)
+# ==========================================
+
+def get_expert_advice(disease_name, user_query="What is the treatment?"):
+    prompt = f"""
+    You are an expert Agriculture Scientist. The onion crop has '{disease_name}'.
+    Provide the following details in simple bullet points:
+    - Cause: Briefly explain the biological reason.
+    - Recommended Medicine: Give the exact commercial fungicide name.
+    - Application Method: Specific instructions on dosage/spray.
+    - Farmer Safety: Key protective measures.
+    
+    Farmer's Question: {user_query}
+    """
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "system", "content": "You are a professional Agri-Expert."},
+                  {"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content
+
+def get_medicine_image(query):
+    api_key = os.getenv("GOOGLE_API_KEY")
+    cx = os.getenv("GOOGLE_CX")
+    search_url = "https://www.googleapis.com/customsearch/v1"
+    params = {'q': query + " fungicide agriculture medicine bottle", 'cx': cx, 'key': api_key, 'searchType': 'image', 'num': 1}
+    try:
+        response = requests.get(search_url, params=params)
+        data = response.json()
+        return data['items'][0]['link'] if 'items' in data else None
+    except: return None
+
+def text_to_speech(text):
+    response = client.audio.speech.create(model="tts-1", voice="alloy", input=text[:400]) # limit to 400 chars for speed
+    audio_path = "crop_advice.mp3"
+    response.stream_to_file(audio_path)
+    return audio_path
+
+# ==========================================
+# 4. Sidebar & Model
 # ==========================================
 with st.sidebar:
     st.image("update_profile.jpg", width=200)
-    st.title("Project Dashboard")
+    st.markdown("### Project Dashboard")
     st.metric(label="Model Accuracy", value="96.09%")
+    st.markdown("---")
     st.write("**Student:** Atharv Taral")
-    st.write("**Domain:** Smart Agriculture AI")
+    st.write("**Domain:** Agentic AI in Agriculture")
+    st.write("**University:** SPPU, Pune")
 
 @st.cache_resource
 def load_my_model():
     return tf.keras.models.load_model("best_model.h5")
 
-try:
-    model = load_my_model()
-except Exception as e:
-    st.error(f"Error loading model: {e}")
-
-class_labels = [
-    'Alternaria_D', 'Botrytis Leaf Blight', 'Bulb_blight-D', 'Caterpillar-P',
-    'Fusarium-D', 'Healthy leaves', 'Iris yellow virus_augment', 'Rust',
-    'Virosis-D', 'Xanthomonas Leaf Blight', 'stemphylium Leaf Blight'
-]
+model = load_my_model()
+class_labels = ['Alternaria_D', 'Botrytis Leaf Blight', 'Bulb_blight-D', 'Caterpillar-P', 
+                'Fusarium-D', 'Healthy leaves', 'Iris yellow virus', 'Rust', 
+                'Virosis-D', 'Xanthomonas Leaf Blight', 'stemphylium Leaf Blight']
 
 # ==========================================
-# 5. Main Dashboard
+# 5. Main Content
 # ==========================================
 st.markdown("<h1 class='main-title'>🧅 OnionGuard: Agentic Diagnostic AI</h1>", unsafe_allow_html=True)
-st.markdown("---")
 
-col1, col2 = st.columns([1, 1], gap="large")
+col1, col2 = st.columns([1, 1.2], gap="large")
 
 with col1:
-    st.subheader("📤 Upload Leaf Scan")
-    uploaded_file = st.file_uploader("Select an image of the onion leaf", type=["jpg", "jpeg", "png"])
+    st.markdown("### 📤 Upload Leaf Scan")
+    uploaded_file = st.file_uploader("Upload an image for analysis", type=["jpg", "jpeg", "png"])
     if uploaded_file:
         img = Image.open(uploaded_file).convert('RGB')
-        st.image(img, caption='Preview', use_container_width=True)
+        st.image(img, caption='Uploaded Image', use_container_width=True)
 
 with col2:
-    st.subheader("🔍 Analysis & Expert Advice")
+    st.markdown("### 🔍 Analysis & Agentic Advice")
     if uploaded_file:
-        # Image Pre-processing
         img_resized = img.resize((100, 100))
         img_array = image.img_to_array(img_resized) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
 
-        if st.button('✨ Start AI Diagnosis'):
+        if st.button('✨ Launch Diagnostic Agent'):
             progress_bar = st.progress(0)
-            for percent in range(100):
-                time.sleep(0.01)
-                progress_bar.progress(percent + 1)
+            for p in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(p + 1)
 
             predictions = model.predict(img_array)
             class_idx = np.argmax(predictions)
@@ -190,91 +181,58 @@ with col2:
 
             st.markdown(f"""
                 <div class="res-card">
-                    <h2 style='color: white;'>Diagnosis Complete</h2>
-                    <p style='font-size: 20px;'><b>Detected Disease:</b> {result}</p>
-                    <p style='font-size: 18px;'><b>Confidence:</b> {confidence:.2f}%</p>
+                    <h2>Diagnosis Complete</h2>
+                    <p><b>Condition Identified:</b> {result}</p>
+                    <p><b>Prediction Confidence:</b> {confidence:.2f}%</p>
                 </div>
             """, unsafe_allow_html=True)
 
-            # If disease is detected, start Agentic AI process
             if result != 'Healthy leaves':
-                with st.spinner("🤖 Consulting AI Expert & Finding Medicine..."):
+                with st.spinner("🤖 Consulting AI Expert & Fetching Medicine Data..."):
                     advice = get_expert_advice(result)
                     st.session_state.advice = advice
                     st.session_state.detected_result = result
-                    # --- New: Drug photo search ---
-                    med_img = get_medicine_image(result)
-                    st.session_state.med_img = med_img
-                    audio_path = text_to_speech(advice)
-                    st.session_state.audio = audio_path
+                    st.session_state.med_img = get_medicine_image(result)
+                    st.session_state.audio = text_to_speech(advice)
             else:
                 st.balloons()
-                st.success("The crop appears to be in excellent health!")
+                st.success("Your onion crop is healthy! No treatment needed.")
 
-        # --- AI ADVISOR, TEXT & VOICE CHATBOT SECTION ---
+    # Display AI Expert Results
+    if "advice" in st.session_state and uploaded_file:
+        st.markdown("---")
+        st.markdown("### 📋 Treatment Expert Suggestion")
+        
+        # Medicine Photo
+        if st.session_state.med_img:
+            st.image(st.session_state.med_img, caption=f"Recommended Product for {st.session_state.detected_result}", width=350)
+        else:
+            st.info("ℹ️ Direct medicine reference photo not available. Please consult the text below.")
 
+        st.write(st.session_state.advice)
+        st.audio(st.session_state.audio)
 
-            # A photo of the medicine will appear here.
-            # --- AI ADVISOR, MEDICINE IMAGE & VOICE OUTPUT ---
-            if "advice" in st.session_state:
-                st.markdown("---")
-                st.markdown("### 📋 Treatment Expert Suggestion")
+        # Voice Chat Section
+        st.markdown("---")
+        st.subheader("💬 Chat with Krishi-Mitra AI")
+        
+        voice_data = mic_recorder(start_prompt="🎤 Ask a Question (Voice)", stop_prompt="🛑 Stop", key="recorder")
+        user_text = st.chat_input("Or type your question here...")
 
-                # १. Photo of the medicine (show only if found, otherwise give a warning)
-                if "med_img" in st.session_state and st.session_state.med_img:
-                    st.image(st.session_state.med_img,
-                             caption=f"Recommended Product for {st.session_state.detected_result}",
-                             width=300)
-                else:
-                    # This will appear if the photo is not found.
-                    st.info("ℹ️ Looking for a reference photo of the medicine or it is not available.")
+        query = None
+        if user_text: query = user_text
+        elif voice_data:
+            with open("temp_v.wav", "wb") as f: f.write(voice_data['bytes'])
+            transcript = client.audio.transcriptions.create(model="whisper-1", file=open("temp_v.wav", "rb"))
+            query = transcript.text
 
-                # २. AI Advice and audio
-                st.write(st.session_state.advice)
-                st.audio(st.session_state.audio)
-
-                st.markdown("---")
-                st.subheader("💬 Chat with Krishi-Mitra AI")
-
-
-
-            # Chat Input
-            user_text_query = st.chat_input("Type your question here (e.g. Where can I get medicine?)...")
-
-            # Voice Input
-            st.write("🎤 **Or ask out loud:**")
-            voice_data = mic_recorder(start_prompt="Record Question", stop_prompt="Stop Recording", key="recorder")
-
-            # --- Processing logic ---
-            query_to_process = None
-
-            if user_text_query:
-                query_to_process = user_text_query
-
-            elif voice_data:
-                with open("temp_v.wav", "wb") as f:
-                    f.write(voice_data['bytes'])
-                with st.spinner("Transcribing voice..."):
-                    transcript = client.audio.transcriptions.create(model="whisper-1", file=open("temp_v.wav", "rb"))
-                    query_to_process = transcript.text
-
-            # If the user asks something (Text or Voice)
-            if query_to_process:
-                with st.spinner("🤖 thinking..."):
-                    # Answering with reference to the previous result
-                    new_advice = get_expert_advice(st.session_state.detected_result, query_to_process)
-                    st.markdown(f"**You asked:** {query_to_process}")
-                    st.info(new_advice)
-
-                    # Creating a new answer sound
-                    new_audio = text_to_speech(new_advice)
-                    st.audio(new_audio)
+        if query:
+            with st.spinner("Thinking..."):
+                new_advice = get_expert_advice(st.session_state.detected_result, query)
+                st.info(f"**Question:** {query}\n\n**AI Expert:** {new_advice}")
+                st.audio(text_to_speech(new_advice))
 
 # ==========================================
 # 6. Footer
 # ==========================================
-st.markdown("<br><br><hr>", unsafe_allow_html=True)
-st.markdown(
-    "<p style='text-align:center; color:#999;'>© 2026 Atharv Taral | Final Year Project | Savitribai Phule Pune University</p>",
-    unsafe_allow_html=True
-)
+st.markdown("<br><br><hr><p style='text-align:center; color:#777;'>Developed by Atharv Taral | Savitribai Phule Pune University | 2026</p>", unsafe_allow_html=True)
