@@ -173,25 +173,7 @@ class_labels = [
 # ==========================================
 # 5. Main Dashboard
 # ==========================================
-st.markdown(
-    """
-    <div style='text-align: center; padding-top: 20px; padding-bottom: 20px; width: 100%;'>
-        <h1 style='
-            font-size: 75px !important; 
-            font-weight: 900 !important; 
-            color: #1b5e20 !important; 
-            display: inline-block !important;
-            line-height: 1.2 !important;
-            letter-spacing: -2px !important;
-            margin: 0px !important;
-        '>
-            🧅 OnionGuard: Agentic Diagnostic AI
-        </h1>
-    </div>
-    """, 
-    unsafe_allow_html=True
-)
-st.markdown("---")
+
 
 col1, col2 = st.columns([1, 1], gap="large")
 
