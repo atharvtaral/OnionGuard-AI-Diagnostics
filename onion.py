@@ -19,6 +19,9 @@ if not API_KEY:
     st.error("❌ OpenAI API Key not found in .env file!")
     st.stop()
 
+API_ENABLED = False
+
+
 client = openai.OpenAI(api_key=API_KEY)
 
 # ==========================================
@@ -217,7 +220,7 @@ with col2:
             result = class_labels[class_idx]
             confidence = np.max(predictions) * 100
 
-            # Displaying Result in Black Card
+            # १. निकाल दाखवण्यासाठी रिझल्ट कार्ड
             st.markdown(f"""
                 <div class="res-card">
                     <h2>Diagnosis Complete</h2>
@@ -226,19 +229,23 @@ with col2:
                 </div>
             """, unsafe_allow_html=True)
 
+            # २. सेफ्टी लॉक लॉजिक (फक्त बदललेला भाग)
             if result != 'Healthy leaves':
-                with st.spinner("🤖 Consulting AI Expert..."):
-                    advice = get_expert_advice(result)
-                    st.session_state.advice = advice
-                    st.session_state.detected_result = result
-                    med_img = get_medicine_image(result)
-                    st.session_state.med_img = med_img
-                    audio_path = text_to_speech(advice)
-                    st.session_state.audio = audio_path
+                if not API_ENABLED:
+                    st.warning("⚠️ Demo Mode: AI Expert Advice is currently disabled to save API credits. Prediction only.")
+                else:
+                    # जर API_ENABLED True असेल तरच पुढची प्रोसेस होईल
+                    with st.spinner("🤖 Consulting AI Expert..."):
+                        advice = get_expert_advice(result)
+                        st.session_state.advice = advice
+                        st.session_state.detected_result = result
+                        med_img = get_medicine_image(result)
+                        st.session_state.med_img = med_img
+                        audio_path = text_to_speech(advice)
+                        st.session_state.audio = audio_path
             else:
                 st.balloons()
                 st.success("The crop appears to be in excellent health!")
-
         # --- Display Expert Results ---
         if "advice" in st.session_state and uploaded_file:
             st.markdown("---")
