@@ -85,12 +85,49 @@ st.set_page_config(page_title="OnionGuard AI", page_icon="🧅", layout="wide")
 
 st.markdown("""
     <style>
-    .stApp { background: linear-gradient(to right, #f8f9fa, #e9ecef); }
-    section[data-testid="stSidebar"] { background-color: #1b5e20 !important; }
-    section[data-testid="stSidebar"] * { color: white !important; }
-    .main-title { font-size: 40px; font-weight: 800; color: #2e7d32; text-align: center; }
-    .res-card { background-color: black; padding: 25px; border-radius: 15px; border-left: 10px solid #2e7d32; color: #ffffff; }
-    .stButton>button { background: linear-gradient(45deg, #2e7d32, #43a047); color: white; border-radius: 25px; font-weight: bold; }
+    /* Main App Background */
+    .stApp { 
+        background-color: #fcfdfc; 
+    }
+    
+    /* Main Title (OnionGuard) - Dark Green for contrast */
+    .main-title { 
+        font-size: 42px; 
+        font-weight: 850; 
+        color: #1b5e20 !important; 
+        text-align: center; 
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 2px #eeeeee;
+    }
+    
+    /* Column Subheaders - Bold and Readable */
+    h3 { 
+        color: #2e7d32 !important; 
+        font-weight: 700 !important;
+        font-size: 24px !important;
+    }
+
+    /* Diagnosis Result Card - Dark background with white text */
+    .res-card { 
+        background-color: #121212; 
+        padding: 20px; 
+        border-radius: 12px; 
+        border-left: 8px solid #43a047; 
+        color: #ffffff !important; 
+    }
+    
+    /* Text inside the result card */
+    .res-card h2, .res-card p {
+        color: #ffffff !important;
+    }
+
+    /* Sidebar Styling */
+    section[data-testid="stSidebar"] {
+        background-color: #1b5e20 !important;
+    }
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
