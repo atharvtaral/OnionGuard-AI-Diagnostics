@@ -85,7 +85,7 @@ st.set_page_config(page_title="OnionGuard AI", page_icon="🧅", layout="wide")
 
 st.markdown("""
     <style>
-    .stApp { background: linear-gradient(to right, #f8f9fa, #e9ecef); }
+    .stApp { background: linear-gradient(to right, #000000, #e9ecef); }
     section[data-testid="stSidebar"] { background-color: #1b5e20 !important; }
     section[data-testid="stSidebar"] * { color: white !important; }
     .main-title { font-size: 40px; font-weight: 800; color: #2e7d32; text-align: center; }
