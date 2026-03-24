@@ -173,7 +173,40 @@ class_labels = [
 # ==========================================
 # 5. Main Dashboard
 # ==========================================
-
+with st.container():
+    st.markdown(
+        """
+        <div style='
+            text-align: center; 
+            background-color: transparent; 
+            padding: 40px 0px; 
+            width: 100%;
+        '>
+            <h1 style='
+                font-size: 80px !important; 
+                font-weight: 900 !important; 
+                color: #1b5e20 !important; 
+                margin: 0px !important;
+                padding: 0px !important;
+                display: block !important;
+                line-height: 1 !important;
+                font-family: sans-serif !important;
+            '>
+                🧅 OnionGuard AI
+            </h1>
+            <p style='
+                font-size: 25px !important; 
+                color: #2e7d32 !important; 
+                font-weight: 600 !important;
+                margin-top: 10px !important;
+            '>
+                Agentic Diagnostic System for Smart Agriculture
+            </p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+st.markdown("---")
 
 col1, col2 = st.columns([1, 1], gap="large")
 
