@@ -88,7 +88,7 @@ st.markdown("""
     .stApp { background: linear-gradient(to right, #000000, #e9ecef); }
     section[data-testid="stSidebar"] { background-color: #1b5e20 !important; }
     section[data-testid="stSidebar"] * { color: white !important; }
-    .main-title { font-size: 40px; font-weight: 800; color: #2e7d32; text-align: center; }
+    .main-title { font-size: 40px; font-weight: 800; color: #000000; text-align: center; }
     .res-card { background-color: black; padding: 25px; border-radius: 15px; border-left: 10px solid #2e7d32; color: #ffffff; }
     .stButton>button { background: linear-gradient(45deg, #2e7d32, #43a047); color: white; border-radius: 25px; font-weight: bold; }
     </style>
