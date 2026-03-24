@@ -89,6 +89,16 @@ st.markdown("""
         text-shadow: none !important;
     }
 
+
+    h1, h2, h3, h4, h5, h6, 
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, 
+    [data-testid="stHeader"] h3 {
+        color: white !important;
+        font-weight: 700 !important;
+    }
+
+    
+
     /* Sidebar - Deep Forest Green */
     section[data-testid="stSidebar"] {
         background-color: #1b5e20 !important;
