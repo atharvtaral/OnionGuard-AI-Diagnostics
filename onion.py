@@ -132,7 +132,7 @@ st.markdown("""
 
     /* THE MASSIVE TITLE FIX */
     .hero-title {
-        font-size: 85px !important;
+        font-size: 71px !important;
         font-weight: 900 !important;
         color: #1b5e20 !important;
         line-height: 1 !important;
