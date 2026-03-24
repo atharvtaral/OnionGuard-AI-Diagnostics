@@ -171,43 +171,41 @@ class_labels = [
 ]
 
 # ==========================================
-# 5. Main Dashboard (FIXED COLOR & SIZE)
+# 5. Main Dashboard (THE ULTIMATE FIX)
 # ==========================================
 st.markdown(
     """
     <div style='
-        text-align: center; 
-        margin-top: -80px; 
-        padding: 30px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        background-color: transparent;
+        margin-top: -100px;
+        padding: 50px 0;
     '>
-        <h1 style='
+        <div style='
             font-size: 80px !important; 
             font-weight: 900 !important; 
-            color: #1b5e20 !important;   /* Force Dark Green */
-            background-color: #fcfdfc !important; /* Force a light background behind text */
-            display: inline-block !important;
-            padding: 10px 20px !important;
-            border-radius: 15px !important;
-            line-height: 1.2 !important;
-            letter-spacing: -2px !important;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1) !important;
+            color: #1b5e20 !important; 
+            text-align: center;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            width: 100%;
         '>
-            OnionGuard AI
-        </h1>
-        <p style='
-            font-size: 24px !important; 
+            🧅 OnionGuard AI
+        </div>
+        <div style='
+            font-size: 1.5vw !important; 
             color: #2e7d32 !important; 
-            font-weight: 700 !important;
-            margin-top: 10px !important;
-            background-color: rgba(255,255,255,0.8) !important;
-            display: inline-block !important;
-            padding: 5px 15px !important;
-            border-radius: 8px !important;
+            font-weight: 600 !important;
+            text-align: center;
+            margin-top: 10px;
         '>
             Agentic Diagnostic System for Smart Agriculture
-        </p>
+        </div>
     </div>
     """, 
     unsafe_allow_html=True
