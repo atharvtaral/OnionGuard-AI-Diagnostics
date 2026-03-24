@@ -234,8 +234,24 @@ with col2:
 
             # २. सेफ्टी लॉक लॉजिक (फक्त बदललेला भाग)
             if result != 'Healthy leaves':
-                if not API_ENABLED:
-                    st.warning("⚠️ Demo Mode: AI Expert Advice is currently disabled to save API credits. Prediction only.")
+               if not API_ENABLED:
+                        st.markdown("""
+                            <div style="
+                                background-color: #fff3cd; 
+                                color: #856404; 
+                                padding: 18px; 
+                                border-radius: 12px; 
+                                border: 2px solid #ffeeba;
+                                font-size: 18px;
+                                font-weight: bold;
+                                display: flex;
+                                align-items: center;
+                                margin-bottom: 20px;
+                            ">
+                                <span style="font-size: 24px; margin-right: 15px;">⚠️</span>
+                                Demo Mode: AI Expert Advice is currently disabled to save API credits. Prediction only.
+                            </div>
+                        """, unsafe_allow_html=True)
                 else:
                     # जर API_ENABLED True असेल तरच पुढची प्रोसेस होईल
                     with st.spinner("🤖 Consulting AI Expert..."):
