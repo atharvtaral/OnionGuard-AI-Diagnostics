@@ -173,39 +173,43 @@ class_labels = [
 # ==========================================
 # 5. Main Dashboard
 # ==========================================
-with st.container():
-    st.markdown(
-        """
+st.markdown(
+    """
+    <div style='
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: -100px;
+        padding: 50px 0;
+    '>
         <div style='
-            text-align: center; 
-            background-color: transparent; 
-            padding: 40px 0px; 
+            font-size: 6vw !important; 
+            font-weight: 900 !important; 
+            color: #1b5e20 !important; 
+            text-align: center;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
             width: 100%;
         '>
-            <h1 style='
-                font-size: 80px !important; 
-                font-weight: 900 !important; 
-                color: #1b5e20 !important; 
-                margin: 0px !important;
-                padding: 0px !important;
-                display: block !important;
-                line-height: 1 !important;
-                font-family: sans-serif !important;
-            '>
-                🧅 OnionGuard AI
-            </h1>
-            <p style='
-                font-size: 25px !important; 
-                color: #2e7d32 !important; 
-                font-weight: 600 !important;
-                margin-top: 10px !important;
-            '>
-                Agentic Diagnostic System for Smart Agriculture
-            </p>
+            🧅 OnionGuard AI
         </div>
-        """, 
-        unsafe_allow_html=True
-    )
+        <div style='
+            font-size: 1.5vw !important; 
+            color: #2e7d32 !important; 
+            font-weight: 600 !important;
+            text-align: center;
+            margin-top: 10px;
+        '>
+            Agentic Diagnostic System for Smart Agriculture
+        </div>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
 st.markdown("---")
 
 col1, col2 = st.columns([1, 1], gap="large")
