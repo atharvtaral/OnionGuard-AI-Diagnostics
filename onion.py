@@ -237,7 +237,7 @@ col1, col2 = st.columns([1, 1], gap="large")
 with col1:
     st.subheader("📤 Upload Leaf Scan")
     # File uploader restricted to common image formats
-    uploaded_file = st.file_uploader("Select an image of the onion leaf", type=["jpg", "jpeg", "png", "webp", "bmp", "tiff", "heic"]
+    uploaded_file = st.file_uploader("Select an image of the onion leaf", type=["jpg", "jpeg", "png", "webp", "bmp", "tiff", "heic"])
                                      
     if uploaded_file:
         # Displaying the uploaded image as a preview for the user
