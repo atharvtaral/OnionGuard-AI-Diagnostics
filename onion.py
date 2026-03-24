@@ -188,7 +188,7 @@ class_labels = [
 # ==========================================
 # 5. Main Dashboard
 # ==========================================
-st.markdown("<h1 class='main-title'>🧅 OnionGuard: Agentic Diagnostic AI</h1>", unsafe_allow_html=True)
+st.markdown("<h1>🧅 OnionGuard: Agentic Diagnostic AI</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
 col1, col2 = st.columns([1, 1], gap="large")
