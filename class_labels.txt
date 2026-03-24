@@ -1,0 +1,11 @@
+Alternaria_D
+Botrytis Leaf Blight
+Bulb_blight-D
+Caterpillar-P
+Fusarium-D
+Healthy leaves
+Iris yellow virus_augment
+Rust
+Virosis-D
+Xanthomonas Leaf Blight
+stemphylium Leaf Blight
