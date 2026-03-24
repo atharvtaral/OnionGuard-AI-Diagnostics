@@ -175,17 +175,18 @@ class_labels = [
 # ==========================================
 st.markdown(
     """
-    <h1 style='
-        font-size: 75px !important; 
-        font-weight: 900 !important; 
-        color: #1b5e20 !important; 
-        text-align: center !important; 
-        margin-top: -50px !important; 
-        margin-bottom: 20px !important;
-        font-family: "Source Sans Pro", sans-serif !important;
-    '>
-        🧅 OnionGuard: Agentic Diagnostic AI
-    </h1>
+    <div style='text-align: center; margin-top: -70px;'>
+        <h1 style='
+            font-size: 90px !important; 
+            font-weight: 900 !important; 
+            color: #1b5e20 !important; 
+            display: inline-block !important;
+            line-height: 1 !important;
+            letter-spacing: -2px !important;
+        '>
+            🧅 OnionGuard: Agentic Diagnostic AI
+        </h1>
+    </div>
     """, 
     unsafe_allow_html=True
 )
