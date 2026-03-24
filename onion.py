@@ -83,6 +83,11 @@ st.markdown("""
     .stApp {
         background-color: #f8f9fa !important;
     }
+    h3, .stMarkdown h3 { 
+        color: #1a1a1a !important; 
+        font-weight: 800 !important;
+        text-shadow: none !important;
+    }
 
     /* Sidebar - Deep Forest Green */
     section[data-testid="stSidebar"] {
@@ -101,6 +106,15 @@ st.markdown("""
     .stMarkdown p, .stMarkdown li, .stMarkdown span {
         color: #1a1a1a !important;
         font-size: 18px !important;
+    }
+
+    .stMarkdown p, .stMarkdown li, .stMarkdown span, label {
+        color: #121212 !important; 
+        font-weight: 500 !important;
+    }
+
+    .stFileUploader label {
+        color: #1a1a1a !important;
     }
 
     /* Custom Title Container */
