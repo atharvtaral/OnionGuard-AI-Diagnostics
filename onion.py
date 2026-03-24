@@ -75,70 +75,57 @@ def text_to_speech(text):
     return audio_path
 
 # ==========================================
-# 3. Page Layout & Optimized Styling
+# 3. GLOBAL PREMIUM STYLING (Forced Light Mode)
 # ==========================================
-st.set_page_config(page_title="OnionGuard AI", page_icon="🧅", layout="wide")
-
 st.markdown("""
     <style>
-    /* 1. Overall App Background (Gradient to Light Gray) */
-    .stApp { 
-        background: linear-gradient(to right, #f8f9fa, #e9ecef) !important; 
-    }
-    
-    /* 2. Main Title - Dark Green for high contrast */
-    .main-title { 
-        font-size: 60px !important;    /* Increased from 40px to 60px */
-        font-weight: 900 !important;    /* Extra Bold */
-        color: #1b5e20 !important;      /* Dark Green */
-        text-align: center !important; 
-        margin-top: -50px !important;   /* Pulls it up to reduce empty space */
-        margin-bottom: 20px !important;
-        letter-spacing: -1px !important; /* Makes it look like a modern brand */
-        line-height: 1.2 !important;
-    }
-    
-    /* 3. Subheaders - Professional Green */
-    h3, .stMarkdown h3 { 
-        color: #2e7d32 !important; 
-        font-weight: 700 !important;
+    /* Force a clean, professional Light Background */
+    .stApp {
+        background-color: #f8f9fa !important;
     }
 
-    /* 4. AI Advice Text & Lists - Forced Dark Color */
+    /* Sidebar - Deep Forest Green */
+    section[data-testid="stSidebar"] {
+        background-color: #1b5e20 !important;
+    }
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+
+    /* Target the Top Header Bar of Streamlit to make it white */
+    header[data-testid="stHeader"] {
+        background-color: #f8f9fa !important;
+    }
+
+    /* FIX: Standard Text Visibility */
     .stMarkdown p, .stMarkdown li, .stMarkdown span {
-        color: #262730 !important; 
+        color: #1a1a1a !important;
         font-size: 18px !important;
     }
 
-    /* 5. Diagnosis Result Card (Pure Black with White Text) */
-    .res-card { 
-        background-color: #000000 !important; 
-        padding: 25px; 
-        border-radius: 15px; 
-        border-left: 10px solid #2e7d32; 
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-        margin-bottom: 25px;
-    }
-    .res-card h2, .res-card p, .res-card b {
-        color: #ffffff !important; 
+    /* Custom Title Container */
+    .hero-section {
+        text-align: center;
+        padding: 60px 0 20px 0;
+        margin-top: -100px;
+        width: 100%;
     }
 
-    /* 6. Sidebar Styling */
-    section[data-testid="stSidebar"] { 
-        background-color: #1b5e20 !important; 
-    }
-    section[data-testid="stSidebar"] * { 
-        color: white !important; 
+    /* THE MASSIVE TITLE FIX */
+    .hero-title {
+        font-size: 85px !important;
+        font-weight: 900 !important;
+        color: #1b5e20 !important;
+        line-height: 1 !important;
+        letter-spacing: -3px !important;
+        margin-bottom: 10px !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
 
-    /* 7. Action Button Styling */
-    .stButton>button { 
-        background: linear-gradient(45deg, #1b5e20, #43a047) !important; 
-        color: white !important; 
-        border-radius: 25px !important; 
-        font-weight: bold !important;
-        border: none !important;
-        padding: 10px 25px !important;
+    .hero-subtitle {
+        font-size: 24px !important;
+        color: #43a047 !important;
+        font-weight: 600 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -171,41 +158,13 @@ class_labels = [
 ]
 
 # ==========================================
-# 5. Main Dashboard (THE ULTIMATE FIX)
+# 5. Main Dashboard Header
 # ==========================================
 st.markdown(
     """
-    <div style='
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-top: -100px;
-        padding: 50px 0;
-    '>
-        <div style='
-            font-size: 80px !important; 
-            font-weight: 900 !important; 
-            color: #1b5e20 !important; 
-            text-align: center;
-            line-height: 1;
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            width: 100%;
-        '>
-            🧅 OnionGuard AI
-        </div>
-        <div style='
-            font-size: 1.5vw !important; 
-            color: #2e7d32 !important; 
-            font-weight: 600 !important;
-            text-align: center;
-            margin-top: 10px;
-        '>
-            Agentic Diagnostic System for Smart Agriculture
-        </div>
+    <div class="hero-section">
+        <div class="hero-title">🧅 OnionGuard AI</div>
+        <div class="hero-subtitle">Agentic Diagnostic System for Smart Agriculture</div>
     </div>
     """, 
     unsafe_allow_html=True
