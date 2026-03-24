@@ -12,7 +12,6 @@ from streamlit_mic_recorder import mic_recorder
 # ==========================================
 # 1. Configuration & API Setup
 # ==========================================
-# This will load the OPENAI_API_KEY from your .env file
 load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -65,9 +64,6 @@ def get_medicine_image(query):
         data = response.json()
         if 'items' in data:
             return data['items'][0]['link']
-        else:
-            # If the item is not found, an error will appear in the terminal.
-            print(f"Google Search Response: {data}")
     except Exception as e:
         print(f"Error fetching image: {e}")
 
@@ -79,23 +75,73 @@ def text_to_speech(text):
     return audio_path
 
 # ==========================================
-# 3. Page Layout & Styling (Your Original)
+# 3. Page Layout & Optimized Styling
 # ==========================================
 st.set_page_config(page_title="OnionGuard AI", page_icon="🧅", layout="wide")
 
 st.markdown("""
     <style>
-    .stApp { background: linear-gradient(to right, #000000, #e9ecef); }
-    section[data-testid="stSidebar"] { background-color: #1b5e20 !important; }
-    section[data-testid="stSidebar"] * { color: white !important; }
-    .main-title { font-size: 40px; font-weight: 800; color: #000000; text-align: center; }
-    .res-card { background-color: black; padding: 25px; border-radius: 15px; border-left: 10px solid #2e7d32; color: black; }
-    .stButton>button { background: linear-gradient(45deg, #2e7d32, #43a047); color: white; border-radius: 25px; font-weight: bold; }
+    /* 1. Overall App Background (Gradient to Light Gray) */
+    .stApp { 
+        background: linear-gradient(to right, #f8f9fa, #e9ecef) !important; 
+    }
+    
+    /* 2. Main Title - Dark Green for high contrast */
+    .main-title { 
+        font-size: 45px !important; 
+        font-weight: 850 !important; 
+        color: #1b5e20 !important; 
+        text-align: center !important; 
+        margin-bottom: 25px !important;
+    }
+    
+    /* 3. Subheaders - Professional Green */
+    h3, .stMarkdown h3 { 
+        color: #2e7d32 !important; 
+        font-weight: 700 !important;
+    }
+
+    /* 4. AI Advice Text & Lists - Forced Dark Color */
+    .stMarkdown p, .stMarkdown li, .stMarkdown span {
+        color: #262730 !important; 
+        font-size: 18px !important;
+    }
+
+    /* 5. Diagnosis Result Card (Pure Black with White Text) */
+    .res-card { 
+        background-color: #000000 !important; 
+        padding: 25px; 
+        border-radius: 15px; 
+        border-left: 10px solid #2e7d32; 
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+        margin-bottom: 25px;
+    }
+    .res-card h2, .res-card p, .res-card b {
+        color: #ffffff !important; 
+    }
+
+    /* 6. Sidebar Styling */
+    section[data-testid="stSidebar"] { 
+        background-color: #1b5e20 !important; 
+    }
+    section[data-testid="stSidebar"] * { 
+        color: white !important; 
+    }
+
+    /* 7. Action Button Styling */
+    .stButton>button { 
+        background: linear-gradient(45deg, #1b5e20, #43a047) !important; 
+        color: white !important; 
+        border-radius: 25px !important; 
+        font-weight: bold !important;
+        border: none !important;
+        padding: 10px 25px !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. Sidebar & Model Loading (Your Original)
+# 4. Sidebar & Model Loading
 # ==========================================
 with st.sidebar:
     st.image("update_profile.jpg", width=200)
@@ -137,7 +183,6 @@ with col1:
 with col2:
     st.subheader("🔍 Analysis & Expert Advice")
     if uploaded_file:
-        # Image Pre-processing
         img_resized = img.resize((100, 100))
         img_array = image.img_to_array(img_resized) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
@@ -153,21 +198,20 @@ with col2:
             result = class_labels[class_idx]
             confidence = np.max(predictions) * 100
 
+            # Displaying Result in Black Card
             st.markdown(f"""
                 <div class="res-card">
-                    <h2 style='color: white;'>Diagnosis Complete</h2>
-                    <p style='font-size: 20px;'><b>Detected Disease:</b> {result}</p>
-                    <p style='font-size: 18px;'><b>Confidence:</b> {confidence:.2f}%</p>
+                    <h2>Diagnosis Complete</h2>
+                    <p><b>Detected Disease:</b> {result}</p>
+                    <p><b>Confidence:</b> {confidence:.2f}%</p>
                 </div>
             """, unsafe_allow_html=True)
 
-            # If disease is detected, start Agentic AI process
             if result != 'Healthy leaves':
-                with st.spinner("🤖 Consulting AI Expert & Finding Medicine..."):
+                with st.spinner("🤖 Consulting AI Expert..."):
                     advice = get_expert_advice(result)
                     st.session_state.advice = advice
                     st.session_state.detected_result = result
-                    # --- New: Drug photo search ---
                     med_img = get_medicine_image(result)
                     st.session_state.med_img = med_img
                     audio_path = text_to_speech(advice)
@@ -176,70 +220,49 @@ with col2:
                 st.balloons()
                 st.success("The crop appears to be in excellent health!")
 
-        # --- AI ADVISOR, TEXT & VOICE CHATBOT SECTION ---
+        # --- Display Expert Results ---
+        if "advice" in st.session_state and uploaded_file:
+            st.markdown("---")
+            st.markdown("### 📋 Treatment Expert Suggestion")
 
+            if "med_img" in st.session_state and st.session_state.med_img:
+                st.image(st.session_state.med_img,
+                         caption=f"Recommended Medicine for {st.session_state.detected_result}",
+                         width=300)
+            else:
+                st.info("ℹ️ Reference medicine photo not found.")
 
-            # A photo of the medicine will appear here.
-            # --- AI ADVISOR, MEDICINE IMAGE & VOICE OUTPUT ---
-            if "advice" in st.session_state:
-                st.markdown("---")
-                st.markdown("### 📋 Treatment Expert Suggestion")
+            st.write(st.session_state.advice)
+            st.audio(st.session_state.audio)
 
-                # १. Photo of the medicine (show only if found, otherwise give a warning)
-                if "med_img" in st.session_state and st.session_state.med_img:
-                    st.image(st.session_state.med_img,
-                             caption=f"Recommended Product for {st.session_state.detected_result}",
-                             width=300)
-                else:
-                    # This will appear if the photo is not found.
-                    st.info("ℹ️ Looking for a reference photo of the medicine or it is not available.")
+            st.markdown("---")
+            st.subheader("💬 Chat with Krishi-Mitra AI")
 
-                # २. AI Advice and audio
-                st.write(st.session_state.advice)
-                st.audio(st.session_state.audio)
+            user_text_query = st.chat_input("Ask a follow-up question...")
+            st.write("🎤 **Or ask via voice:**")
+            voice_data = mic_recorder(start_prompt="Record", stop_prompt="Stop", key="recorder")
 
-                st.markdown("---")
-                st.subheader("💬 Chat with Krishi-Mitra AI")
-
-
-
-            # Chat Input
-            user_text_query = st.chat_input("Type your question here (e.g. Where can I get medicine?)...")
-
-            # Voice Input
-            st.write("🎤 **Or ask out loud:**")
-            voice_data = mic_recorder(start_prompt="Record Question", stop_prompt="Stop Recording", key="recorder")
-
-            # --- Processing logic ---
             query_to_process = None
-
             if user_text_query:
                 query_to_process = user_text_query
-
             elif voice_data:
                 with open("temp_v.wav", "wb") as f:
                     f.write(voice_data['bytes'])
-                with st.spinner("Transcribing voice..."):
-                    transcript = client.audio.transcriptions.create(model="whisper-1", file=open("temp_v.wav", "rb"))
-                    query_to_process = transcript.text
+                transcript = client.audio.transcriptions.create(model="whisper-1", file=open("temp_v.wav", "rb"))
+                query_to_process = transcript.text
 
-            # If the user asks something (Text or Voice)
             if query_to_process:
-                with st.spinner("🤖 thinking..."):
-                    # Answering with reference to the previous result
+                with st.spinner("Thinking..."):
                     new_advice = get_expert_advice(st.session_state.detected_result, query_to_process)
-                    st.markdown(f"**You asked:** {query_to_process}")
+                    st.markdown(f"**Question:** {query_to_process}")
                     st.info(new_advice)
-
-                    # Creating a new answer sound
-                    new_audio = text_to_speech(new_advice)
-                    st.audio(new_audio)
+                    st.audio(text_to_speech(new_advice))
 
 # ==========================================
 # 6. Footer
 # ==========================================
 st.markdown("<br><br><hr>", unsafe_allow_html=True)
 st.markdown(
-    "<p style='text-align:center; color:#999;'>© 2026 Atharv Taral | Final Year Project | Savitribai Phule Pune University</p>",
+    "<p style='text-align:center; color:#1b5e20; font-weight:bold;'>© 2026 Atharv Taral | Final Year Project | Savitribai Phule Pune University</p>",
     unsafe_allow_html=True
 )
