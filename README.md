@@ -5,7 +5,7 @@
 [![Model Accuracy](https://img.shields.io/badge/accuracy-96.09%25-brightgreen.svg)]()
 
 ## 🌐 Live Demo
-👉 [Click here to view the Live App](YOUR_STREAMLIT_URL_HERE)
+👉 [Click here to view the Live App](https://onionguard-ai-diagnostics-1232.streamlit.app/)
 
 **OnionGuard AI** is a state-of-the-art 'Agentic AI' solution for modern agriculture. It identifies 11 types of onion diseases using computer vision and acts as an autonomous **Agri-Expert** that provides localized treatment advice and voice-based interaction for farmers.
 
