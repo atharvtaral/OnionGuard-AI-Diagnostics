@@ -90,12 +90,7 @@ st.markdown("""
     }
 
 
-    h1, h2, h3, h4, h5, h6, 
-    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, 
-    [data-testid="stHeader"] h3 {
-        color: white !important;
-        font-weight: 700 !important;
-    }
+    
 
     
 
