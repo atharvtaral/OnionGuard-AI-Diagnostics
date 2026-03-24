@@ -233,38 +233,41 @@ with col2:
             """, unsafe_allow_html=True)
 
             # २. सेफ्टी लॉक लॉजिक (फक्त बदललेला भाग)
-            if result != 'Healthy leaves':
-               if not API_ENABLED:
-                        st.markdown("""
-                            <div style="
-                                background-color: #fff3cd; 
-                                color: #856404; 
-                                padding: 18px; 
-                                border-radius: 12px; 
-                                border: 2px solid #ffeeba;
-                                font-size: 18px;
-                                font-weight: bold;
-                                display: flex;
-                                align-items: center;
-                                margin-bottom: 20px;
-                            ">
-                                <span style="font-size: 24px; margin-right: 15px;">⚠️</span>
-                                Demo Mode: AI Expert Advice is currently disabled to save API credits. Prediction only.
-                            </div>
-                        """, unsafe_allow_html=True)
-                else:
-                    # जर API_ENABLED True असेल तरच पुढची प्रोसेस होईल
-                    with st.spinner("🤖 Consulting AI Expert..."):
-                        advice = get_expert_advice(result)
-                        st.session_state.advice = advice
-                        st.session_state.detected_result = result
-                        med_img = get_medicine_image(result)
-                        st.session_state.med_img = med_img
-                        audio_path = text_to_speech(advice)
-                        st.session_state.audio = audio_path
+           # निकाल कार्ड (Result Card) नंतर हा भाग टाकावा
+        if result != 'Healthy leaves':
+            if not API_ENABLED:
+                st.markdown("""
+                    <div style="
+                        background-color: #fff3cd; 
+                        color: #856404; 
+                        padding: 18px; 
+                        border-radius: 12px; 
+                        border: 2px solid #ffeeba;
+                        font-size: 18px;
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    ">
+                        <span style="font-size: 24px; margin-right: 15px;">⚠️</span>
+                        Demo Mode: AI Expert Advice is currently disabled to save API credits. Prediction only.
+                    </div>
+                """, unsafe_allow_html=True)
             else:
-                st.balloons()
-                st.success("The crop appears to be in excellent health!")
+                # जर API_ENABLED True असेल तरच पुढची प्रोसेस होईल
+                with st.spinner("🤖 Consulting AI Expert..."):
+                    advice = get_expert_advice(result)
+                    st.session_state.advice = advice
+                    st.session_state.detected_result = result
+                    
+                    med_img = get_medicine_image(result)
+                    st.session_state.med_img = med_img
+                    
+                    audio_path = text_to_speech(advice)
+                    st.session_state.audio = audio_path
+        else:
+            st.balloons()
+            st.success("The crop appears to be in excellent health!")
         # --- Display Expert Results ---
         if "advice" in st.session_state and uploaded_file:
             st.markdown("---")
