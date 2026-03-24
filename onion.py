@@ -143,22 +143,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <h1 style='
-        font-size: 75px !important; 
-        font-weight: 900 !important; 
-        color: #1b5e20 !important; 
-        text-align: center !important; 
-        margin-top: -50px !important; 
-        margin-bottom: 20px !important;
-        font-family: "Source Sans Pro", sans-serif !important;
-    '>
-        🧅 OnionGuard: Agentic Diagnostic AI
-    </h1>
-    """, 
-    unsafe_allow_html=True
-)
+ 
 
 # ==========================================
 # 4. Sidebar & Model Loading
@@ -188,7 +173,22 @@ class_labels = [
 # ==========================================
 # 5. Main Dashboard
 # ==========================================
-st.markdown("<h1>🧅 OnionGuard: Agentic Diagnostic AI</h1>", unsafe_allow_html=True)
+st.markdown(
+    """
+    <h1 style='
+        font-size: 75px !important; 
+        font-weight: 900 !important; 
+        color: #1b5e20 !important; 
+        text-align: center !important; 
+        margin-top: -50px !important; 
+        margin-bottom: 20px !important;
+        font-family: "Source Sans Pro", sans-serif !important;
+    '>
+        🧅 OnionGuard: Agentic Diagnostic AI
+    </h1>
+    """, 
+    unsafe_allow_html=True
+)
 st.markdown("---")
 
 col1, col2 = st.columns([1, 1], gap="large")
