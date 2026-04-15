@@ -27,7 +27,7 @@ if not API_KEY:
     st.stop()
 
 # Set to True to enable GPT-4o expert advice; set to False for Demo Mode (saves API credits)
-API_ENABLED = False
+API_ENABLED = True
 
 
 # Initializing the OpenAI Client with the authenticated API Key to enable AI Agent features
