@@ -85,7 +85,7 @@ with st.sidebar:
     st.image("update_profile.jpg", width=150) # Make sure this file exists
     st.title("Project Dashboard")
     st.metric(label="Model Accuracy", value="96.09%")
-    st.write("**Student:** Atharv Taral")
+    # st.write("**Student:** Atharv Taral")
 
 @st.cache_resource
 def load_my_model():
